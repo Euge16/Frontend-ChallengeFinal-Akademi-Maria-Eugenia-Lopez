@@ -10,7 +10,9 @@ import EditarUsuario from './componentes/usuarios/EditarUsuario';
 import EliminarUsuario from './componentes/usuarios/EliminarUsuario';
 import GetUsuarioPorId from './componentes/usuarios/GetUsuarioPorId';
 import CrearDocenteOSuperadmin from './componentes/usuarios/CrearDocenteOSuperadmin';
-
+import EditarCurso from './componentes/cursos/EditarCurso';
+import GetCursoPorId from './componentes/cursos/GetCusoPorId';
+import EliminarCurso from './componentes/cursos/EliminarCurso';
 
 const App = () => {
   return (
@@ -29,6 +31,12 @@ const App = () => {
         <Route path="/usuarios/editar/:id" element={<EditarUsuario />} />
         <Route path="/usuarios/eliminar/:id" element={<EliminarUsuario/>} />
         <Route path="/usuarios/ver/:id" element={<GetUsuarioPorId/>} />
+        
+        {/* Cursos */}
+        <Route path="/cursos/editar/:id" element={<EditarCurso />} />
+        <Route path="/cursos/ver/:id" element={<GetCursoPorId />} />
+        <Route path="/cursos/eliminar/:id" element={<EliminarCurso/>} />
+
         
 
 

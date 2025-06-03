@@ -1,38 +1,33 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { editarUsuario } from '../../redux/acciones/usuarioAccion';
+import { editarCurso } from '../../redux/acciones/cursoAccion'; 
 
-const EditarUsuario = () => {
+const EditarCurso = () => {
   const { id } = useParams();
   const [mensajeExito, setMensajeExito] = useState('');
   const [mensajeError, setMensajeError] = useState('');
   const [erroresValidacion, setErroresValidacion] = useState([]);
   const [cargando, setCargando] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
 
-  const usuario = useSelector(estado =>
-    estado.usuario.usuarios.find(u => u._id === id)
+  const curso = useSelector(estado => estado.curso.cursos.find(c => c._id === id)
   );
+  const error = useSelector(estado => estado.curso.error);
 
-
-  const usuarioLogueado = useSelector(estado => estado.autenticacion.usuario);
 
   const [nombre, setNombre] = useState('');
-  const [email, setEmail] = useState('');
-  const [titulo, setTitulo] = useState('');
-  const [biografia, setBiografia] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [cupo, setCupo] = useState('');
 
   useEffect(() => {
-    if (usuario) {
-      setNombre(usuario.nombre);
-      setEmail(usuario.email);
-      setTitulo(usuario.titulo);
-      setBiografia(usuario.biografia);
+    if (curso) {
+      setNombre(curso.nombre);
+      setDescripcion(curso.descripcion);
+      setCupo(curso.cupo);
     }
-  }, [usuario]);
+  }, [curso]);
 
   const handleSubmit = async (e) => {
     setCargando(true);
@@ -40,21 +35,10 @@ const EditarUsuario = () => {
     setMensajeError('');
     setMensajeExito('');
 
-
     try {
       e.preventDefault();
-      const respuesta = await dispatch(editarUsuario(id, {nombre, email, titulo, biografia}));
+      const respuesta = await dispatch(editarCurso(id, {nombre, descripcion, cupo}));
       setMensajeExito(respuesta.mensaje);
-      setTimeout(() => {
-        if (usuarioLogueado.rol === 'superadmin') {
-          navigate('/superadmin');
-        } else if (usuarioLogueado.rol === 'docente') {
-          navigate('/docente');
-        } else {
-          navigate('/estudiante');
-        }
-      }, 2000);
-
     } catch (error) {
       if (error.response?.data?.errors) {
         setErroresValidacion(error.response.data.errors);
@@ -64,15 +48,16 @@ const EditarUsuario = () => {
     } finally {
       setCargando(false);
     }
-  
+
   };
 
-  if (!usuario) return <p>Cargando usuario...</p>;
+  if (!curso) return <p>Cargando curso...</p>;
 
   return (
     <div className="container mt-5" style={{ maxWidth: '500px' }}>
-      <h2 className="mb-4 text-center">Editar Usuario</h2>
+      <h2 className="mb-4 text-center">Editar curso</h2>
 
+      {error && <div className="alert alert-danger">{error}</div>}
 
       <form onSubmit={handleSubmit} noValidate>
         <div className="mb-3">
@@ -87,40 +72,27 @@ const EditarUsuario = () => {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Correo Electrónico</label>
+          <label className="form-label">Descripción</label>
           <input
-            type="email"
+            type="text"
             className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
             required
           />
         </div>
 
-        {usuario?.rol === 'docente' && (
-          <div className="mb-3">
-            <label className="form-label">Título</label>
-            <input
-              type="text"
-              className="form-control"
-              value={titulo}
-              onChange={(e) => setTitulo(e.target.value)}
-            />
-          </div>
-        )}
-
-        {(usuario?.rol === 'docente' || usuario?.rol === 'estudiante') && (
-          <div className="mb-3">
-            <label className="form-label">Biografía</label>
-            <textarea
-              className="form-control"
-              rows="3"
-              value={biografia}
-              onChange={(e) => setBiografia(e.target.value)}
-            />
-          </div>
-        )}
-
+        <div className="mb-3">
+          <label className="form-label">Cupo</label>
+          <input
+            type="number"
+            className="form-control"
+            value={cupo}
+            onChange={(e) => setCupo(e.target.value)}
+            required
+          />
+        </div>
+        
         {mensajeExito && <div className="alert alert-success">{mensajeExito}</div>}
       
         {mensajeError && <div className="alert alert-danger">{mensajeError}</div>}
@@ -134,7 +106,6 @@ const EditarUsuario = () => {
             </ul>
             </div>
         )}
-
         <button type="submit" className="btn btn-primary w-100" disabled={cargando}>
           {cargando ? 'Guardando...' : 'Guardar Cambios'}
         </button>
@@ -144,4 +115,4 @@ const EditarUsuario = () => {
 };
 
 
-export default EditarUsuario;
+export default EditarCurso;

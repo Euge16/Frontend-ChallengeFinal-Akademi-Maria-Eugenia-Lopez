@@ -34,10 +34,7 @@ const cursoReducer = (estado = estadoInicial, accion) => {
         case 'EDITAR_CURSO_EXITO':
             return {
                 ...estado,
-                cursos: estado.cursos.map(u =>
-                u._id === accion.payload._id ? accion.payload : u
-                ),
-                
+                cursos: estado.cursos.map(c => c._id === accion.payload._id ? accion.payload : c), 
                 error: null
             };
 
@@ -50,7 +47,7 @@ const cursoReducer = (estado = estadoInicial, accion) => {
         case 'ELIMINAR_CURSO_EXITO':
             return {
                 ...estado,
-                cursos: estado.cursos.filter(u => u._id !== accion.payload),
+                cursos: estado.cursos.filter(c => c._id !== accion.payload),
                 error: null
             };
 
@@ -66,7 +63,8 @@ const cursoReducer = (estado = estadoInicial, accion) => {
                 curso: accion.payload 
             };
         case 'CURSO_DETALLE_ERROR':
-            return { ...estado, 
+            return { 
+                ...estado, 
                 cargando: false, 
                 error: accion.payload 
             };
@@ -74,6 +72,22 @@ const cursoReducer = (estado = estadoInicial, accion) => {
             return {
                 ...estado,
                 cargando: false
+            };
+        case 'OBTENER_CURSOS_DOCENTE_EXITO':
+            return {
+                ...estado,
+                cursos: accion.payload.cursos,
+                paginaActual: accion.payload.paginaActual,
+                totalPaginas: accion.payload.totalPaginas,
+                totalRegistros: accion.payload.totalRegistros,
+                cargando: false,
+                error: null
+            };
+        case 'OBTENER_CURSOS_DOCENTE_ERROR':
+            return {
+                ...estado,
+                cargando: false, 
+                error: accion.payload 
             };
         default:
             return estado;

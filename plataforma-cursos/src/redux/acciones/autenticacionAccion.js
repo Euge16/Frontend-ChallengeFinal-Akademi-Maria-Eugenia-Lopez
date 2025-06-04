@@ -24,11 +24,33 @@ export const iniciarSesion = (email, password) => {
       });
 
       localStorage.setItem('token', token);
+      localStorage.setItem('usuario', JSON.stringify(usuario));
+
     } catch (error) {
         throw error; 
     }
   };
 };
+
+export const cargarUsuarioDesdeStorage = () => {
+  return dispatch => {
+    const token = localStorage.getItem('token');
+    const usuarioJSON = localStorage.getItem('usuario');
+
+    if (token && usuarioJSON) {
+      const usuario = JSON.parse(usuarioJSON);
+
+      dispatch({
+        type: 'INICIO_SESION_EXITO',
+        payload: {
+          usuario,
+          token
+        }
+      });
+    }
+  };
+};
+
 
 export const cerrarSesion = () => {
   return dispatch => {

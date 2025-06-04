@@ -60,8 +60,9 @@ export const getCursoPorId = (id) => {
             const respuesta = await api.get(`${API}/${id}`);
             dispatch({
                 type: 'CURSO_DETALLE_EXITO',
-                payload: respuesta.data,
+                payload: respuesta.data.curso,
             });
+            return respuesta.data.curso
         } catch (error) {
             dispatch({
                 type: 'CURSO_DETALLE_ERROR',
@@ -92,3 +93,74 @@ export const eliminarCurso = (id) => {
         }
     };
 };
+
+export const crearCurso = (datos) => {
+  return async (dispatch) => {
+      try {
+        const respuesta = await api.post(`${API}`, datos);
+
+        dispatch({
+          type: 'REGISTRO_CURSO_EXITO',
+          payload: respuesta.data
+        });
+        return respuesta.data
+      } catch (error) {
+          throw error;
+      }
+    };
+};
+
+/* export const getCursosDelProfesor = (id) => {
+    return async (dispatch) => {
+        try {
+            const respuesta = await api.get(`${API}/docente/${id}`);
+            console.log('Cursos del profesor:', respuesta.data.cursos);
+            dispatch({
+                type: 'OBTENER_CURSOS_DOCENTE_EXITO',
+                payload: respuesta.data.cursos,
+            });
+            return respuesta.data.cursos
+        } catch (error) {
+            dispatch({
+                type: 'OBTENER_CURSOS_DOCENTE_ERROR',
+                payload: error.response?.data?.mensaje
+            });
+            throw error;
+        }
+    };
+};  */
+
+
+export const getCursosDelProfesor = (id, pagina = 1, limite = 3, filtros = {}) => {
+    return async dispatch => {
+        dispatch({ type: 'CARGANDO_CURSOS' });
+
+        try {
+            const params = new URLSearchParams({
+                pagina,
+                limite,
+                ...filtros
+            });
+
+            const respuesta = await api.get(`${API}/docente/${id}?${params.toString()}`);
+
+            dispatch({
+                type: 'OBTENER_CURSOS_DOCENTE_EXITO',
+                payload: {
+                    paginaActual: respuesta.data.paginaActual,
+                    totalPaginas: respuesta.data.totalPaginas,
+                    totalRegistros: respuesta.data.totalRegistros,
+                    cursos: respuesta.data.cursos
+                }
+            });
+        } catch (error) {
+            dispatch({
+                type: 'OBTENER_CURSOS_DOCENTE_ERROR',
+                payload: error.response?.data?.mensaje
+            });
+            throw error;
+        }
+    };
+};
+
+

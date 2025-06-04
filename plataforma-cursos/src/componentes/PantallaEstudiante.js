@@ -1,3 +1,4 @@
+
 const PantallaEstudiante = () => (
   <div>
     <h2>Pantalla Estudiante</h2>
@@ -6,3 +7,4 @@ const PantallaEstudiante = () => (
 );
 
 export default PantallaEstudiante;
+

@@ -35,7 +35,6 @@ const PantallaDocente = () => {
                     </div>
                 </div>
 
-                {/* Contenido dinámico */}
                 <div className="col-md-9">
                     {vistaActual === 'mis-cursos' && (
                         <div className="card shadow-sm">
@@ -45,6 +44,7 @@ const PantallaDocente = () => {
                             </div>
                         </div>
                     )}
+
                 </div>
             </div>
         </div>

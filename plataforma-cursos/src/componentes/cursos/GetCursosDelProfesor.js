@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCursosDelProfesor } from '../../redux/acciones/cursoAccion'; // Ajustá la ruta
+import { getCursosDelProfesor } from '../../redux/acciones/cursoAccion';
 
 const GetCursosDelProfesor = () => {
   const dispatch = useDispatch();

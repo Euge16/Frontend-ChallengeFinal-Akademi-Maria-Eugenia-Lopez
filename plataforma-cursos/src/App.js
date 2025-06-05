@@ -18,6 +18,9 @@ import GetCursoPorId from './componentes/cursos/GetCusoPorId';
 import EliminarCurso from './componentes/cursos/EliminarCurso';
 import PantallaDocente from './componentes/PantallaDocente';
 import CrearCurso from './componentes/cursos/CrearCurso';
+import PantallaEstudiante from './componentes/PantallaEstudiante';
+import CancelarInscripcion from './componentes/inscripciones/CancelarInscripcion';
+import GetInscripcionesPorCurso from './componentes/inscripciones/GetInscripcionesPorCurso';
 
 
 const App = () => {
@@ -45,6 +48,12 @@ const App = () => {
 
         {/* DOCENTE */}
         <Route path="/docente" element={<PantallaDocente/>} />
+        <Route path="/docente/inscripciones/curso/:id" element={<GetInscripcionesPorCurso />} />
+
+        {/* ESTUDIANTE */}
+        <Route path="/estudiante" element={<PantallaEstudiante/>} />
+        <Route path="/inscripciones/cancelar/:id" element={<CancelarInscripcion />} />
+
 
         {/* USUARIOS */}
         <Route path="/superadmin/crear-docente-superadmin" element={<CrearDocenteOSuperadmin/>} />

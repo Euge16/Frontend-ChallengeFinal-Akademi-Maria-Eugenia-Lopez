@@ -73,10 +73,10 @@ const Login = () => {
             />
           </div>
 
-          {/* Mensaje de error general */}
+          
           {mensajeError && <div className="alert alert-danger">{mensajeError}</div>}
 
-          {/* Errores de validación específicos */}
+          
           {erroresValidacion.length > 0 && (
             <div className="alert alert-danger">
               <ul className="mb-0">

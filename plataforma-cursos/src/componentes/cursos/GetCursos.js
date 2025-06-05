@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { getCursos } from '../../redux/acciones/cursoAccion';
+import CrearInscripcion from '../inscripciones/CrearInscripcion';
 
 const GetCursos = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { cursos, cargando, paginaActual, totalPaginas, totalRegistros } = useSelector(state => state.curso);
-
+    const usuario = useSelector(estado => estado.autenticacion?.usuario);
+    
     const [pagina, setPagina] = useState(1);
     const [ nombreFiltro, setNombreFiltro ] = useState('');
     const limite = 3;
@@ -19,6 +21,7 @@ const GetCursos = () => {
         dispatch(getCursos(pagina, limite, filtros));
     }, [dispatch, pagina, limite, nombreFiltro ]);
 
+    
     const siguientePagina = () => {
         if (pagina < totalPaginas) {
         setPagina(pagina + 1);
@@ -85,18 +88,26 @@ const GetCursos = () => {
                         >
                         Ver
                         </button>
-                        <button
-                        className="btn btn-sm btn-warning me-2"
-                        onClick={() => navigate(`/cursos/editar/${curso._id}`)}
-                        >
-                        Editar
-                        </button>
-                        <button
-                        className="btn btn-sm btn-danger"
-                        onClick={() => navigate(`/cursos/eliminar/${curso._id}`)}
-                        >
-                        Eliminar
-                        </button>
+
+                        {usuario?.rol === 'superadmin' && (
+                            <>
+                                <button
+                                    className="btn btn-sm btn-warning me-2"
+                                    onClick={() => navigate(`/cursos/editar/${curso._id}`)}
+                                    >
+                                    Editar
+                                </button>
+                                <button
+                                    className="btn btn-sm btn-danger"
+                                    onClick={() => navigate(`/cursos/eliminar/${curso._id}`)}
+                                    >
+                                    Eliminar
+                                </button>
+                            </>
+                        )}
+                        {usuario?.rol === 'estudiante' && (
+                            <CrearInscripcion cursoId={curso._id}/>
+                        )}
                     </td>
                     </tr>
                 ))}

@@ -32,7 +32,7 @@ const calificacionReducer = (estado = estadoInicial, accion) => {
             return {
                 ...estado,
                 cargando: false,
-                calificaciones: accion.payload.calificaciones || [],
+                calificaciones: accion.payload || [],
             };
 
         case 'CALIFICACION_ERROR':

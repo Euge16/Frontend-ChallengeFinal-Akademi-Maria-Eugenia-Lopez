@@ -45,62 +45,64 @@ const GetInscripcionesPorCurso = () => {
   }, [calificaciones]);
 
   return (
-    <div className="card shadow-sm mt-4">
-      <div className="card-header bg-info text-white">
-        <h5 className="mb-0">👥 Estudiantes Inscritos</h5>
-      </div>
-      <div className="card-body">
-        {cargando ? (
-          <div className="text-center my-4">
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Cargando...</span>
-            </div>
-            <p>Cargando estudiantes inscritos...</p>
-          </div>
-        ) : error ? (
-          <div className="alert alert-danger text-center" role="alert">
-            {error}
-          </div>
-        ) : inscripciones.length === 0 ? (
-          <p className="text-muted">No hay estudiantes inscritos aún.</p>
-        ) : (
-          <table className="table table-striped table-hover">
-            <thead className="table-dark">
-              <tr>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Nota</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              {inscripciones.map((insc) => {
-                const estudianteId = insc.estudianteId._id;
-                const calificacion = calificacionesMap[estudianteId];
+    <div className="container mt-5">
+  <div className="mb-4 text-center">
+    <h3 className="fw-bold">👥 Estudiantes Inscritos</h3>
+  </div>
 
-                return (
-                  <tr key={insc._id}>
-                    <td>{insc.estudianteId.nombre}</td>
-                    <td>{insc.estudianteId.email}</td>
-                    <td>
-                      {calificacion ? calificacion.nota : "Sin calificar"}
-                    </td>
-                    <td>
-                      <CrearCalificacion
-                        cursoId={id}
-                        estudianteId={estudianteId}
-                        calificacion={calificacion} 
-                        nombreEstudiante={insc.estudianteId.nombre}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
+  {cargando ? (
+    <div className="text-center my-4">
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Cargando...</span>
       </div>
+      <p className="mt-2">Cargando estudiantes inscritos...</p>
     </div>
+  ) : error ? (
+    <div className="alert alert-danger text-center" role="alert">
+      {error}
+    </div>
+  ) : inscripciones.length === 0 ? (
+    <p className="text-muted text-center">No hay estudiantes inscritos aún.</p>
+  ) : (
+    <div className="table-responsive mx-auto" style={{ maxWidth: "900px" }}>
+      <table className="table table-bordered table-hover align-middle shadow-sm">
+        <thead className="table-dark text-center">
+          <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Nota</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {inscripciones.map((insc) => {
+            const estudianteId = insc.estudianteId._id;
+            const calificacion = calificacionesMap[estudianteId];
+
+            return (
+              <tr key={insc._id}>
+                <td>{insc.estudianteId.nombre}</td>
+                <td>{insc.estudianteId.email}</td>
+                <td className="text-center">
+                  {calificacion ? calificacion.nota : "Sin calificar"}
+                </td>
+                <td className="text-center">
+                  <CrearCalificacion
+                    cursoId={id}
+                    estudianteId={estudianteId}
+                    calificacion={calificacion}
+                    nombreEstudiante={insc.estudianteId.nombre}
+                  />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  )}
+</div>
+
   );
 };
 

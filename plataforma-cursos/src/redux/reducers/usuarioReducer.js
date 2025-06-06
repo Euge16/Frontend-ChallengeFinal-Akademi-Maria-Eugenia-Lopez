@@ -6,6 +6,9 @@ const estadoInicial = {
     paginaActual: 1,
     totalPaginas: 1,
     totalRegistros: 0,
+    totalEstudiantes: 0,
+    totalDocentes: 0,
+    totalSuperadmins: 0,
     error: null
 };
 
@@ -71,6 +74,13 @@ const usuarioReducer = (estado = estadoInicial , accion) => {
             return {
                 ...estado,
                 cargando: false
+            };
+        case 'OBTENER_TOTALES_ROLES':
+            return {
+                ...estado,
+                totalEstudiantes: accion.payload.estudiantes,
+                totalDocentes: accion.payload.docentes,
+                totalSuperadmins: accion.payload.superadmins
             };
         default:
             return estado;

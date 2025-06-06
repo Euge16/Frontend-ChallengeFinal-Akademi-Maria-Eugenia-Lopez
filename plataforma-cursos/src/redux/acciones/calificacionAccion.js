@@ -22,7 +22,7 @@ export const crearCalificacion = (datos) => async (dispatch) => {
 };
 
 export const getCalificacionesPorEstudiante = (id) => async (dispatch) => {
-    dispatch({ type: 'CARGANDO_CALIFICACIONES' });
+   
 
     try {
         const respuesta = await api.get(`${API}/estudiante/${id}`);
@@ -35,6 +35,7 @@ export const getCalificacionesPorEstudiante = (id) => async (dispatch) => {
             type: 'CALIFICACION_ERROR',
             payload: error.response?.data?.mensaje
         });
+        throw error;
     }
 };
 

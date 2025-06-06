@@ -77,7 +77,7 @@ const GetCursos = () => {
                     <tr key={curso._id}>
                     <td>{curso.nombre}</td>
                     <td>{curso.descripcion}</td>
-                    <td>{curso.docenteId.nombre}</td>
+                    <td>{curso.docenteId.nombre || 'Sin docente asignado'}</td>
                     <td>{curso.cupo}</td>
                     <td>
                         <button

@@ -16,18 +16,22 @@ const EliminarUsuario = () => {
   const usuarioLogueado = useSelector(state => state.autenticacion.usuario);
 
   const handleEliminar = async () => {
+  try {
     await dispatch(eliminarUsuario(id));
-
     if (usuarioLogueado?.rol === 'superadmin') {
-        navigate('/superadmin');
+      navigate('/superadmin');
     } else if (usuarioLogueado?.rol === 'docente') {
-        navigate('/docente');
+      navigate('/docente');
     } else if (usuarioLogueado?.rol === 'estudiante') {
-        navigate('/estudiante');
+      navigate('/estudiante');
     } else {
-        navigate('/');
+      navigate('/');
     }
-  };
+  } catch (error) {
+    console.log(error.response?.data?.mensaje);
+  }
+};
+
 
   if (!usuario) return <p>Usuario no encontrado o no cargado.</p>;
 

@@ -1,8 +1,6 @@
-
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { cerrarSesion } from "../../redux/acciones/autenticacionAccion"; 
-
+import { cerrarSesion } from "../../redux/acciones/autenticacionAccion";
 
 const Logout = () => {
   const navigate = useNavigate();
@@ -10,16 +8,20 @@ const Logout = () => {
 
   const handleLogout = () => {
     if (window.confirm('¿Está seguro que desea cerrar sesión?')) {
-      dispatch(cerrarSesion()); 
+      dispatch(cerrarSesion());
       navigate("/", { replace: true });
     }
   };
 
   return (
-    <button onClick={handleLogout}>
-      <span>Cerrar Sesión</span>
+    <button
+      className="list-group-item list-group-item-action text-dark"
+      onClick={handleLogout}
+    >
+      🚪 Cerrar Sesión
     </button>
   );
+
 };
 
 export default Logout;

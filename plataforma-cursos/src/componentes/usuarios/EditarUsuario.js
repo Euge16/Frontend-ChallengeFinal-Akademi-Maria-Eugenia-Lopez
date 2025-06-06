@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { editarUsuario } from '../../redux/acciones/usuarioAccion';
+import { editarUsuario, getUsuarioPorId } from '../../redux/acciones/usuarioAccion';
 
 const EditarUsuario = () => {
   const { id } = useParams();
@@ -13,10 +13,10 @@ const EditarUsuario = () => {
   const dispatch = useDispatch();
 
 
-  const usuario = useSelector(estado =>
-    estado.usuario.usuarios.find(u => u._id === id)
-  );
-
+  const usuario = useSelector(estado => {
+    const u = estado.usuario.usuarios.find(u => u._id === id);
+    return u || estado.usuario.usuario; 
+  });
 
   const usuarioLogueado = useSelector(estado => estado.autenticacion.usuario);
 
@@ -24,6 +24,12 @@ const EditarUsuario = () => {
   const [email, setEmail] = useState('');
   const [titulo, setTitulo] = useState('');
   const [biografia, setBiografia] = useState('');
+
+  useEffect(() => {
+    if (!usuario && id) {
+      dispatch(getUsuarioPorId(id));
+    }
+  }, [usuario, id, dispatch]);
 
   useEffect(() => {
     if (usuario) {

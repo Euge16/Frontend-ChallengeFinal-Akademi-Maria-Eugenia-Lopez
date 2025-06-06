@@ -47,8 +47,6 @@ const GetUsuarios = () => {
 
   return (
     <div className="container mt-4 mb-5">
-      <h2 className="mb-4">Lista de Usuarios</h2>
-
       {/* Filtros */}
       <div className="row mb-4">
         <div className="col-md-3 mb-2">

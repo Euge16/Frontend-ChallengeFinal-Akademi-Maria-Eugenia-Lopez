@@ -36,8 +36,6 @@ const GetCursos = () => {
 
     return (
         <div className="container mt-4 mb-5">
-        <h2 className="mb-4">Lista de Cursos</h2>
-
         {/* Filtro */}
         <div className="row mb-4">
             <div className="col-md-3 mb-2">

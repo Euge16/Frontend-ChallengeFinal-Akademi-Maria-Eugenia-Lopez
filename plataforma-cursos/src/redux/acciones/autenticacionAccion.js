@@ -55,6 +55,7 @@ export const cargarUsuarioDesdeStorage = () => {
 export const cerrarSesion = () => {
   return dispatch => {
     localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
     dispatch({ type: 'CERRAR_SESION' });
   };
 };

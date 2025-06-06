@@ -8,7 +8,7 @@ const GetCursosDelProfesor = () => {
   const navigate = useNavigate();
 
   const usuario = useSelector(state => state.autenticacion.usuario);
-  const { cursos, cargando, paginaActual, totalPaginas, totalRegistros } = useSelector(state => state.curso);
+  const { cursos, cargando, paginaActual, totalPaginas} = useSelector(state => state.curso);
 
   const [pagina, setPagina] = useState(1);
   const [nombreFiltro, setNombreFiltro] = useState('');
@@ -39,7 +39,6 @@ const GetCursosDelProfesor = () => {
 
   return (
     <div className="container mt-4 mb-5">
-      <h2 className="mb-4">Mis Cursos</h2>
 
       {/* Filtro */}
       <div className="row mb-4">
@@ -64,7 +63,6 @@ const GetCursosDelProfesor = () => {
         </div>
       ) : (
         <>
-          <p>Total de cursos: <strong>{totalRegistros}</strong></p>
 
           <table className="table table-striped table-bordered">
             <thead className="table-dark">

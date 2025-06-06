@@ -106,3 +106,27 @@ export const crearDocenteOSuperadmin = (datos) => {
         }
     };
 };
+
+export const getTotalesPorRol = () => {
+  return async (dispatch) => {
+    try {
+      const [estudiantesRes, docentesRes, superadminsRes] = await Promise.all([
+        api.get(`${API}?rol=estudiante&limite=1`),
+        api.get(`${API}?rol=docente&limite=1`),
+        api.get(`${API}?rol=superadmin&limite=1`)
+      ]);
+
+      dispatch({
+        type: 'OBTENER_TOTALES_ROLES',
+        payload: {
+          estudiantes: estudiantesRes.data.totalRegistros,
+          docentes: docentesRes.data.totalRegistros,
+          superadmins: superadminsRes.data.totalRegistros
+        }
+      });
+    } catch (error) {
+      console.error("Error obteniendo totales por rol", error);
+    }
+  };
+};
+
